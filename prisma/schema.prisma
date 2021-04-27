@@ -1,0 +1,52 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Thread {
+  id         Int       @id @default(autoincrement())
+  title      String    @db.VarChar(255)
+  createdAt  DateTime  @default(now()) @db.Timestamp(6)
+  content    String
+  excerpt    String
+  published  Boolean   @default(false)
+  categoryId Int
+  tags       String[]
+  authorId   Int
+  category   Category  @relation(fields: [categoryId], references: [id])
+  author     User      @relation(fields: [authorId], references: [id])
+  comments   Comment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  content   String
+  published Boolean  @default(false)
+  authorId  Int
+  threadId  Int
+  thread    Thread   @relation(fields: [threadId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id])
+}
+
+model Category {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  description String
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  threads     Thread[]
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(255)
+  email     String    @unique @db.VarChar(255)
+  password  String    @db.VarChar(255)
+  createdAt DateTime  @default(now()) @db.Timestamp(6)
+  threads   Thread[]
+  comments  Comment[]
+}

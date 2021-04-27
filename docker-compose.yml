@@ -10,7 +10,8 @@ services:
     ports:
       - 3000:3000
     environment:
-      POSTGRES_URL: postgres://postgres:postgres@postgres/postgres
+      DATABASE_URL: postgres://postgres:postgres@postgres/postgres
+      MEILI_SEARCH_URL: http://meilisearch:7700
 
   postgres:
     image: postgres
@@ -21,5 +22,3 @@ services:
   meilisearch:
     image: getmeili/meilisearch
     restart: always
-    environment:
-      POSTGRES_PASSWORD: pasword
