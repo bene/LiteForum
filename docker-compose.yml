@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  liteforum:
+    build: .
+    restart: always
+    depends_on:
+      - postgres
+      - meilisearch
+    ports:
+      - 3000:3000
+    environment:
+      POSTGRES_URL: postgres://postgres:postgres@postgres/postgres
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  meilisearch:
+    image: getmeili/meilisearch
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: pasword

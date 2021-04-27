@@ -1,65 +1,88 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Link from "next/link"
+import LiftOnHover from "../components/LiftOnHover"
+import ThreadCard from "../components/ThreadCard"
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+const categories = [
+    {
+        id: 1,
+        title: "Annaouncements",
+        color: "blue",
+    },
+    {
+        id: 2,
+        title: "Human space flight",
+        color: "green",
+    },
+    {
+        id: 3,
+        title: "Science",
+        color: "red",
+    },
+]
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+const latestThreads = [
+    {
+        id: 1,
+        title: "Annaouncements",
+        color: "blue",
+    },
+    {
+        id: 2,
+        title: "Human space flight",
+        color: "green",
+    },
+    {
+        id: 3,
+        title: "Science",
+        color: "red",
+    },
+]
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+export default function Index() {
+    const viewCategories = categories.map(c => (
+        <Link key={c.id} href={`/category/${c.id}`}>
+            <a>
+                <LiftOnHover>
+                    <div
+                        className={`${
+                            c.color ? `border-${c.color}-500 ` : ""
+                        }bg-white rounded-xl shadow-lg border-l-4 p-8`}
+                    >
+                        <h2 className="text-2xl font-bold">{c.title}</h2>
+                        <p className="text-gray-500">
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+                            vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+                            no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                        </p>
+                    </div>
+                </LiftOnHover>
+            </a>
+        </Link>
+    ))
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+    const latestThreads = categories.map(t => (
+        <div key={t.id}>
+            <Link href={`/category/null/${t.id}`}>
+                <a>
+                    <LiftOnHover>
+                        <ThreadCard
+                            title={t.title}
+                            excerpt={
+                                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+                            }
+                            authorId={1}
+                        />
+                    </LiftOnHover>
+                </a>
+            </Link>
         </div>
-      </main>
+    ))
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+    return (
+        <div className="flex gap-8">
+            <div className="flex flex-col w-1/2 gap-8">{viewCategories}</div>
+            <div className="flex flex-col w-1/2 gap-8">{latestThreads}</div>
+        </div>
+    )
 }
