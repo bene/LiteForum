@@ -2,7 +2,7 @@ import Link from "next/link"
 import { PrismaClient } from "@prisma/client"
 
 import LiftOnHover from "../components/LiftOnHover"
-import ThreadCard from "../components/ThreadCard"
+import ThreadCard from "../components/ThreadPreviewCard"
 import { toHexColor } from "../lib/utils"
 import Head from "next/head"
 

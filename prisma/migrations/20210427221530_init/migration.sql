@@ -14,6 +14,18 @@ CREATE TABLE "Thread" (
 );
 
 -- CreateTable
+CREATE TABLE "Comment" (
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "content" TEXT NOT NULL,
+    "published" BOOLEAN NOT NULL DEFAULT false,
+    "authorId" INTEGER NOT NULL,
+    "threadId" INTEGER NOT NULL,
+
+    PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Category" (
     "id" SERIAL NOT NULL,
     "title" VARCHAR(255) NOT NULL,
@@ -28,6 +40,7 @@ CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "email" VARCHAR(255) NOT NULL,
+    "password" VARCHAR(255) NOT NULL,
     "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY ("id")
@@ -41,3 +54,9 @@ ALTER TABLE "Thread" ADD FOREIGN KEY ("categoryId") REFERENCES "Category"("id") 
 
 -- AddForeignKey
 ALTER TABLE "Thread" ADD FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Comment" ADD FOREIGN KEY ("threadId") REFERENCES "Thread"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Comment" ADD FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

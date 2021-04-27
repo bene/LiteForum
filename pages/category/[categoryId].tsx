@@ -1,5 +1,5 @@
 import Link from "next/link"
-import ThreadCard from "../../components/ThreadCard"
+import ThreadCard from "../../components/ThreadPreviewCard"
 import LiftOnHover from "../../components/LiftOnHover"
 import { PrismaClient } from "@prisma/client"
 import Head from "next/head"
